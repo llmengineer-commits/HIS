@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Hague Internet Services — Fast. Affordable. Reliable.</title>
+  <meta name="description" content="The Hague Internet Services — Fast, Affordable & Reliable internet in Embakasi, Soweto, Nasra, Komarock. Paybill 4045895. Call 0746 071 692."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --bg:    #070917;
+      --bg2:   #0c1130;
+      --cyan:  #3ae8ff;
+      --teal:  #00c9b1;
+      --violet:#9b6dff;
+      --pink:  #ff6fd8;
+      --amber: #ffb347;
+      --white: #f0f5ff;
+      --muted: #8898bb;
+
+      --glass:        rgba(255,255,255,0.055);
+      --glass-border: rgba(255,255,255,0.12);
+      --glass-shine:  rgba(255,255,255,0.20);
+      --blur:         blur(22px) saturate(160%);
+      --shadow:       0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.10);
+
+      --iris: linear-gradient(135deg,
+        rgba(58,232,255,0.30) 0%,
+        rgba(155,109,255,0.18) 35%,
+        rgba(255,111,216,0.22) 65%,
+        rgba(0,201,177,0.28) 100%);
+    }
+
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--white); font-family:'DM Sans',sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
+
+    /* ── CURSOR ─────────────────────────────────── */
+    #cur  { position:fixed;z-index:9999;width:12px;height:12px;background:var(--cyan);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen; }
+    #cring{ position:fixed;z-index:9998;width:36px;height:36px;border:1px solid rgba(58,232,255,.45);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .15s,height .15s; }
+
+    /* ── ORBS ───────────────────────────────────── */
+    .orb { position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0; }
+    .o1{width:480px;height:480px;background:rgba(58,232,255,.07);top:-120px;left:-120px;animation:drift1 20s ease-in-out infinite;}
+    .o2{width:420px;height:420px;background:rgba(155,109,255,.09);bottom:-80px;right:-80px;animation:drift2 24s ease-in-out infinite;}
+    .o3{width:300px;height:300px;background:rgba(255,111,216,.06);top:45%;left:55%;animation:drift1 30s ease-in-out infinite reverse;}
+    @keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(55px,35px)}}
+    @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-45px,-25px)}}
+
+    /* ── CANVAS ─────────────────────────────────── */
+    #cv{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+    /* ── GRAIN ──────────────────────────────────── */
+    body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.025;}
+
+    /* ── NAV ────────────────────────────────────── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5vw;background:rgba(7,9,23,.55);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-bottom:1px solid var(--glass-border);}
+    .logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;}
+    .logo-ic{width:42px;height:42px;border-radius:12px;background:var(--iris);border:1px solid var(--glass-shine);display:grid;place-items:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;color:var(--white);box-shadow:0 0 22px rgba(58,232,255,.2),var(--shadow);position:relative;overflow:hidden;}
+    .logo-ic::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 60%);}
+    .logo-tx{font-family:'Syne',sans-serif;font-weight:800;font-size:.88rem;line-height:1.2;color:var(--white);}
+    .logo-tx em{font-style:normal;color:var(--cyan);}
+    .nl{display:flex;gap:2rem;list-style:none;}
+    .nl a{color:var(--muted);text-decoration:none;font-size:.88rem;letter-spacing:.03em;transition:color .25s;}
+    .nl a:hover{color:var(--white);}
+    .btn-n{background:var(--glass)!important;border:1px solid var(--glass-border)!important;backdrop-filter:var(--blur);color:var(--cyan)!important;padding:.48rem 1.3rem;border-radius:100px;font-weight:500;transition:all .3s!important;}
+    .btn-n:hover{background:rgba(58,232,255,.12)!important;border-color:rgba(58,232,255,.4)!important;color:var(--white)!important;}
+    .ham{display:none;flex-direction:column;gap:5px;cursor:none;z-index:200;}
+    .ham span{width:24px;height:2px;background:var(--cyan);border-radius:2px;transition:.3s;}
+
+    /* ── GLASS CARD ─────────────────────────────── */
+    .gc{background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-radius:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;}
+    .gc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 10%,var(--glass-shine) 50%,transparent 90%);}
+    .gc:hover{transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.16);}
+    .iris{position:absolute;inset:0;background:var(--iris);opacity:0;transition:opacity .4s;pointer-events:none;}
+    .gc:hover .iris{opacity:.08;}
+
+    /* ── HERO ───────────────────────────────────── */
+    #hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:8rem 5vw 5rem;position:relative;z-index:2;}
+    .hi{max-width:830px;}
+    .chip{display:inline-flex;align-items:center;gap:.6rem;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:var(--blur);border-radius:100px;padding:.4rem 1.2rem;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:1.8rem;animation:sdn .8s ease both;position:relative;overflow:hidden;}
+    .chip::before{content:'';position:absolute;inset:0;background:var(--iris);opacity:.14;}
+    .ld{width:7px;height:7px;background:#22ff88;border-radius:50%;animation:blink 1.5s infinite;}
+    h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,7vw,5.5rem);font-weight:800;line-height:1.06;letter-spacing:-.025em;margin-bottom:1.4rem;animation:sup .8s .1s ease both;}
+    .gt{background:linear-gradient(90deg,var(--cyan) 0%,var(--violet) 40%,var(--pink) 70%,var(--teal) 100%);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:flow 7s linear infinite;}
+    .hs{font-size:clamp(1rem,2vw,1.2rem);color:var(--muted);max-width:600px;margin:0 auto 2.5rem;line-height:1.75;animation:sup .8s .2s ease both;}
+    .hb{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:sup .8s .35s ease both;}
+    .gb{display:inline-block;text-decoration:none;padding:.9rem 2.2rem;border-radius:14px;font-family:'Syne',sans-serif;font-weight:700;font-size:.83rem;letter-spacing:.07em;text-transform:uppercase;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:var(--blur);color:var(--white);box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .25s,box-shadow .3s;}
+    .gb::before{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(to bottom,rgba(255,255,255,.11),transparent);}
+    .gb::after{content:'';position:absolute;inset:0;background:var(--iris);opacity:0;transition:opacity .3s;}
+    .gb:hover{transform:translateY(-3px);box-shadow:0 16px 50px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.18);}
+    .gb:hover::after{opacity:.3;}
+    .gb span{position:relative;z-index:1;}
+    .gbp{background:linear-gradient(135deg,rgba(58,232,255,.22),rgba(155,109,255,.18));border-color:rgba(58,232,255,.38);color:var(--cyan);box-shadow:0 0 40px rgba(58,232,255,.14),var(--shadow);}
+    .gbp:hover{box-shadow:0 0 60px rgba(58,232,255,.28),0 16px 50px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.18);}
+    .sh{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--muted);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;animation:sup 1s .7s ease both;}
+    .sl{width:1px;height:48px;background:linear-gradient(to bottom,var(--cyan),transparent);animation:sa 2s ease infinite;}
+
+    /* ── STATS ──────────────────────────────────── */
+    #stats{position:relative;z-index:2;padding:0 5vw 3rem;}
+    .sg{max-width:1000px;margin:0 auto;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-radius:20px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));position:relative;overflow:hidden;}
+    .sg::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--glass-shine),transparent);}
+    .sg::after{content:'';position:absolute;inset:0;background:var(--iris);opacity:.055;pointer-events:none;}
+    .sb{padding:1.8rem 1rem;text-align:center;border-right:1px solid var(--glass-border);}
+    .sb:last-child{border-right:none;}
+    .sn{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;display:block;background:linear-gradient(135deg,var(--cyan),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .sl2{font-size:.72rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:.3rem;}
+
+    /* ── WRAP ───────────────────────────────────── */
+    section{position:relative;z-index:2;}
+    .w{max-width:1100px;margin:0 auto;padding:5.5rem 5vw;}
+    .eye{display:flex;align-items:center;gap:.7rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:.8rem;}
+    .eye::before{content:'';width:28px;height:1px;background:var(--cyan);}
+    h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.7rem,3.8vw,3rem);line-height:1.1;margin-bottom:1rem;}
+    p.sub{color:var(--muted);font-size:1rem;max-width:500px;line-height:1.75;margin-bottom:3rem;}
+
+    /* ── SERVICES ───────────────────────────────── */
+    #services{background:rgba(12,17,48,.35);}
+    .sg2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem;}
+    .sc{padding:2rem;}
+    .si{width:50px;height:50px;border-radius:14px;background:var(--glass);border:1px solid var(--glass-border);display:grid;place-items:center;font-size:1.4rem;margin-bottom:1.3rem;position:relative;overflow:hidden;}
+    .si::before{content:'';position:absolute;inset:0;background:var(--iris);opacity:.28;}
+    .sc h3{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.6rem;}
+    .sc p{font-size:.87rem;color:var(--muted);line-height:1.65;}
+    .sp{display:inline-block;margin-top:.9rem;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(58,232,255,.08);border:1px solid rgba(58,232,255,.2);color:var(--cyan);border-radius:100px;padding:.22rem .75rem;}
+
+    /* ── PRICING ────────────────────────────────── */
+    .pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.5rem;align-items:start;}
+    .pc{padding:2.2rem;}
+    .pc.hot{background:linear-gradient(160deg,rgba(58,232,255,.1),rgba(155,109,255,.07),rgba(7,9,23,.25));border-color:rgba(58,232,255,.35);box-shadow:0 0 60px rgba(58,232,255,.12),var(--shadow);}
+    .pb{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,var(--cyan),var(--violet));color:#070917;font-size:.64rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;padding:.28rem 1.2rem;border-radius:0 0 10px 10px;white-space:nowrap;font-family:'Syne',sans-serif;}
+    .pt{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;font-family:'Syne',sans-serif;}
+    .psp{font-family:'Syne',sans-serif;font-size:2.6rem;font-weight:800;line-height:1;}
+    .psp sup{font-size:1rem;color:var(--cyan);}
+    .psp sub{font-size:.85rem;color:var(--muted);font-weight:400;}
+    .pr{display:flex;align-items:baseline;gap:.4rem;margin:.9rem 0 .25rem;}
+    .pk{font-size:.9rem;color:var(--muted);}
+    .pa{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--teal);}
+    .pm{font-size:.8rem;color:var(--muted);}
+    .pg2{font-size:.8rem;color:var(--muted);margin-bottom:1.2rem;}
+    .ph{height:1px;background:var(--glass-border);margin:1.2rem 0;}
+    .pf{list-style:none;display:flex;flex-direction:column;gap:.68rem;margin-bottom:1.8rem;}
+    .pf li{display:flex;align-items:center;gap:.7rem;font-size:.87rem;color:var(--muted);}
+    .ck{color:var(--teal);font-size:.75rem;flex-shrink:0;}
+    .pf li.off{opacity:.33;}
+    .pbn{display:block;text-align:center;padding:.85rem;border-radius:12px;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .3s;cursor:none;position:relative;overflow:hidden;}
+    .pbo{background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:var(--blur);color:var(--white);}
+    .pbo::before{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(to bottom,rgba(255,255,255,.08),transparent);}
+    .pbo:hover{border-color:rgba(58,232,255,.35);color:var(--cyan);box-shadow:0 0 25px rgba(58,232,255,.12);}
+    .pbg{background:linear-gradient(135deg,var(--cyan),var(--teal));color:#070917 !important;box-shadow:0 0 35px rgba(58,232,255,.3);}
+    .pbg span{position:relative;z-index:1;}
+    .pbg:hover{box-shadow:0 0 55px rgba(58,232,255,.5);transform:translateY(-2px);}
+
+    /* ── EXTRA SERVICES ─────────────────────────── */
+    #extra{background:rgba(12,17,48,.35);}
+    .eg{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:1rem;}
+    .ec{padding:1.5rem 1rem;text-align:center;}
+    .ec .ei{font-size:2rem;margin-bottom:.7rem;}
+    .ec h4{font-family:'Syne',sans-serif;font-size:.87rem;font-weight:700;margin-bottom:.3rem;}
+    .ec p{font-size:.79rem;color:var(--muted);line-height:1.55;}
+
+    /* ── WHY ────────────────────────────────────── */
+    .ww{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+    .wf{list-style:none;display:flex;flex-direction:column;gap:1.1rem;}
+    .wfi{display:flex;align-items:flex-start;gap:1rem;padding:1.2rem;border-radius:14px;border:1px solid transparent;transition:border-color .3s,background .3s;}
+    .wfi:hover{border-color:var(--glass-border);background:var(--glass);}
+    .wic{width:40px;height:40px;border-radius:10px;flex-shrink:0;background:var(--glass);border:1px solid var(--glass-border);display:grid;place-items:center;font-size:1.1rem;position:relative;overflow:hidden;}
+    .wic::before{content:'';position:absolute;inset:0;background:var(--iris);opacity:.25;}
+    .wfi h4{font-family:'Syne',sans-serif;font-size:.87rem;font-weight:700;margin-bottom:.28rem;}
+    .wfi p{font-size:.83rem;color:var(--muted);line-height:1.6;}
+    .sph{display:flex;align-items:center;justify-content:center;height:380px;position:relative;}
+    .sphere{width:255px;height:255px;border-radius:50%;background:radial-gradient(ellipse at 35% 30%,rgba(58,232,255,.24) 0%,rgba(155,109,255,.14) 40%,rgba(255,111,216,.1) 70%,rgba(7,9,23,.3) 100%);border:1px solid rgba(255,255,255,.14);box-shadow:0 0 80px rgba(58,232,255,.14),0 0 150px rgba(155,109,255,.07),inset 0 0 60px rgba(255,255,255,.04);position:relative;overflow:hidden;animation:fl 6s ease-in-out infinite;}
+    .sphere::before{content:'';position:absolute;top:10%;left:15%;width:55%;height:35%;background:radial-gradient(ellipse,rgba(255,255,255,.22),transparent 70%);border-radius:50%;transform:rotate(-20deg);}
+    .slbl{position:absolute;inset:0;display:grid;place-items:center;font-size:3.5rem;animation:fl 6s ease-in-out infinite reverse;}
+    .or{position:absolute;border-radius:50%;border:1px solid rgba(58,232,255,.17);animation:spn 20s linear infinite;}
+    .or1{width:320px;height:320px;top:30px;left:calc(50% - 160px);animation-duration:25s;}
+    .or2{width:218px;height:218px;top:81px;left:calc(50% - 109px);border-color:rgba(155,109,255,.14);animation-direction:reverse;animation-duration:18s;}
+    .nd{position:absolute;width:10px;height:10px;border-radius:50%;box-shadow:0 0 12px currentColor;}
+    .nd1{background:var(--cyan);color:var(--cyan);top:33px;left:calc(50%+155px);}
+    .nd2{background:var(--violet);color:var(--violet);bottom:48px;left:calc(50% - 165px);}
+
+    /* ── COVERAGE ───────────────────────────────── */
+    #coverage{background:rgba(12,17,48,.35);}
+    .ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:1rem;}
+    .ac{padding:1.4rem 1rem;text-align:center;}
+    .ac .ai{font-size:1.8rem;margin-bottom:.5rem;}
+    .ac .an{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:.3rem;}
+    .ac .al{font-size:.72rem;color:#22ff88;letter-spacing:.05em;}
+    .ac .as2{font-size:.72rem;color:var(--amber);}
+
+    /* ── CONTACT ────────────────────────────────── */
+    .cl{display:grid;grid-template-columns:1fr 1.4fr;gap:3.5rem;}
+    .cleft h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:1.5rem;}
+    .cm{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;border-radius:14px;margin-bottom:.9rem;text-decoration:none;color:var(--white);background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:var(--blur);box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .25s,box-shadow .3s;}
+    .cm::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--glass-shine);}
+    .cm:hover{transform:translateX(5px);box-shadow:0 8px 30px rgba(58,232,255,.1),var(--shadow);}
+    .cmic{width:42px;height:42px;border-radius:10px;flex-shrink:0;background:var(--glass);border:1px solid var(--glass-border);display:grid;place-items:center;font-size:1.2rem;position:relative;overflow:hidden;}
+    .cmic::before{content:'';position:absolute;inset:0;background:var(--iris);opacity:.2;}
+    .cml{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
+    .cmv{font-size:.95rem;font-weight:600;}
+    .mpb{margin-top:1.4rem;padding:1.2rem 1.4rem;border-radius:14px;background:linear-gradient(135deg,rgba(58,232,255,.08),rgba(0,201,177,.06));border:1px solid rgba(58,232,255,.22);backdrop-filter:var(--blur);}
+    .mph{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:.4rem;}
+    .mpn{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;color:var(--white);}
+    .mps{font-size:.82rem;color:var(--muted);margin-top:.2rem;}
+    .cf{padding:2.5rem;}
+    .cf h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:1.5rem;}
+    .fg{margin-bottom:1.1rem;}
+    .fg label{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+    .fg input,.fg select,.fg textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--glass-border);border-radius:10px;padding:.8rem 1rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.93rem;outline:none;transition:border-color .3s,box-shadow .3s;backdrop-filter:var(--blur);}
+    .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(58,232,255,.5);box-shadow:0 0 0 3px rgba(58,232,255,.08);}
+    .fg textarea{resize:vertical;min-height:90px;}
+    .fg select option{background:var(--bg2);}
+    .fgr{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .sbtn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--cyan),var(--teal));color:#070917;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:none;box-shadow:0 0 30px rgba(58,232,255,.25);transition:box-shadow .3s,transform .2s;position:relative;overflow:hidden;}
+    .sbtn::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,255,255,.14),transparent);}
+    .sbtn:hover{box-shadow:0 0 55px rgba(58,232,255,.45);transform:translateY(-2px);}
+    .sbtn span{position:relative;z-index:1;}
+
+    /* ── FOOTER ─────────────────────────────────── */
+    footer{position:relative;z-index:2;background:rgba(7,9,23,.8);border-top:1px solid var(--glass-border);padding:3.5rem 5vw 2rem;backdrop-filter:var(--blur);}
+    .ft{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:3rem;margin-bottom:3rem;}
+    .fb p{font-size:.87rem;color:var(--muted);line-height:1.75;margin-top:1rem;max-width:250px;}
+    .fc h5{font-family:'Syne',sans-serif;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:1.2rem;}
+    .fc ul{list-style:none;}
+    .fc ul li{margin-bottom:.6rem;}
+    .fc ul li a{color:var(--muted);text-decoration:none;font-size:.87rem;transition:color .25s;}
+    .fc ul li a:hover{color:var(--white);}
+    .fb2{display:flex;justify-content:space-between;align-items:center;padding-top:2rem;border-top:1px solid var(--glass-border);font-size:.8rem;color:var(--muted);flex-wrap:wrap;gap:1rem;}
+    .soc{display:flex;gap:.6rem;}
+    .sl3{width:34px;height:34px;border-radius:9px;background:var(--glass);border:1px solid var(--glass-border);display:grid;place-items:center;color:var(--muted);text-decoration:none;font-size:.9rem;transition:all .25s;position:relative;overflow:hidden;}
+    .sl3::before{content:'';position:absolute;inset:0;background:var(--iris);opacity:0;transition:opacity .3s;}
+    .sl3:hover{color:var(--white);border-color:rgba(58,232,255,.3);}
+    .sl3:hover::before{opacity:.2;}
+
+    /* ── REVEAL ─────────────────────────────────── */
+    .rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+    .rv.on{opacity:1;transform:translateY(0);}
+
+    /* ── TOAST ──────────────────────────────────── */
+    .toast{position:fixed;bottom:2rem;right:2rem;backdrop-filter:var(--blur);background:rgba(58,232,255,.14);border:1px solid rgba(58,232,255,.35);color:var(--white);padding:.9rem 1.6rem;border-radius:14px;font-weight:500;font-size:.9rem;z-index:9999;transform:translateY(100px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1);box-shadow:var(--shadow);}
+    .toast.show{transform:translateY(0);opacity:1;}
+
+    /* ── KEYFRAMES ──────────────────────────────── */
+    @keyframes sdn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes sup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+    @keyframes sa{0%,100%{opacity:.8;transform:scaleY(1)}50%{opacity:.3;transform:scaleY(.65)}}
+    @keyframes flow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+    @keyframes spn{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+    /* ── RESPONSIVE ─────────────────────────────── */
+    @media(max-width:900px){
+      .nl{display:none;flex-direction:column;position:fixed;inset:0;background:rgba(7,9,23,.97);justify-content:center;align-items:center;gap:2.5rem;font-size:1.2rem;z-index:150;}
+      .nl.open{display:flex;}
+      .ham{display:flex;}
+      .ww{grid-template-columns:1fr;}
+      .sph{display:none;}
+      .cl{grid-template-columns:1fr;}
+      .ft{grid-template-columns:1fr 1fr;}
+      .fgr{grid-template-columns:1fr;}
+    }
+    @media(max-width:600px){
+      .ft{grid-template-columns:1fr;}
+      .fb2{flex-direction:column;text-align:center;}
+      .sg{grid-template-columns:1fr 1fr;}
+      .sb:nth-child(2n){border-right:none;}
+    }
+  </style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cring"></div>
+<div class="orb o1"></div>
+<div class="orb o2"></div>
+<div class="orb o3"></div>
+<canvas id="cv"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="logo">
+    <div class="logo-ic">TH</div>
+    <div class="logo-tx">The Hague<br><em>Internet Services</em></div>
+  </a>
+  <ul class="nl" id="nl">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Packages</a></li>
+    <li><a href="#extra">More</a></li>
+    <li><a href="#coverage">Coverage</a></li>
+    <li><a href="#contact" class="btn-n">Get Connected</a></li>
+  </ul>
+  <div class="ham" id="ham" onclick="tnav()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hi">
+    <div class="chip"><div class="ld"></div>The Hague Ltd — Just One Service, Give It To Me</div>
+    <h1>Fast. Affordable.<br><span class="gt">Reliable Internet.</span></h1>
+    <p class="hs">High-speed internet built for Embakasi, Soweto, Nasra, Komarock &amp; Bee Center.<br>The speed you need — for 30 days, every time.</p>
+    <div class="hb">
+      <a href="#pricing" class="gb gbp"><span>📶 View Packages</span></a>
+      <a href="tel:0746071692" class="gb"><span>📞 0746 071 692</span></a>
+    </div>
+  </div>
+  <div class="sh"><div class="sl"></div>Scroll</div>
+</section>
+
+<!-- STATS -->
+<section style="position:relative;z-index:2;padding:0 5vw 3rem;">
+  <div class="sg">
+    <div class="sb"><span class="sn" data-t="99.9">0</span><div class="sl2">% Uptime</div></div>
+    <div class="sb"><span class="sn" data-t="30" data-s=" Days">0</span><div class="sl2">Per Package</div></div>
+    <div class="sb"><span class="sn" data-t="3">0</span><div class="sl2">Speed Tiers</div></div>
+    <div class="sb"><span class="sn" data-t="10" data-s=" Mbps">0</span><div class="sl2">Max Speed</div></div>
+    <div class="sb"><span class="sn" data-t="7">0</span><div class="sl2">Services Offered</div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="w">
+    <p class="eye rv">What We Offer</p>
+    <h2 class="rv">Internet Packages<br>For Every Need</h2>
+    <p class="sub rv">From fast web browsing to 4K streaming and multi-device downloads — we have the right speed for you.</p>
+    <div class="sg2">
+      <div class="gc sc rv"><div class="iris"></div><div class="si">🏠</div><h3>Home Broadband</h3><p>Reliable home internet for streaming, browsing, and remote work. Stay connected all day, every day.</p><span class="sp">Residential</span></div>
+      <div class="gc sc rv"><div class="iris"></div><div class="si">🎬</div><h3>Movie &amp; Music Streaming</h3><p>Smooth HD streaming on Netflix, YouTube, Spotify and more — no buffering, no frustration.</p><span class="sp">Entertainment</span></div>
+      <div class="gc sc rv"><div class="iris"></div><div class="si">📱</div><h3>Multiple Device Support</h3><p>Connect phones, laptops, tablets and smart TVs simultaneously without slowing your connection.</p><span class="sp">Multi-Device</span></div>
+      <div class="gc sc rv"><div class="iris"></div><div class="si">🏢</div><h3>Business Internet</h3><p>Keep your business running with dedicated, reliable connectivity designed for daily operations.</p><span class="sp">Business</span></div>
+      <div class="gc sc rv"><div class="iris"></div><div class="si">📡</div><h3>Wi-Fi Installation</h3><p>Professional Wi-Fi setup and router configuration for optimal whole-home or office coverage.</p><span class="sp">Installation</span></div>
+      <div class="gc sc rv"><div class="iris"></div><div class="si">🔒</div><h3>Secure Browsing</h3><p>Network-level protection keeping your family and devices safe while browsing online.</p><span class="sp">Security</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="w">
+    <p class="eye rv">Our Packages</p>
+    <h2 class="rv">Simple Prices,<br>No Hidden Costs</h2>
+    <p class="sub rv">30-day packages. Pay via <strong style="color:var(--cyan)">M-Pesa Paybill 4045895</strong> — instant activation after payment confirmation.</p>
+    <div class="pg">
+
+      <!-- 4 Mbps -->
+      <div class="gc pc rv"><div class="iris"></div>
+        <div class="pt">Starter</div>
+        <div class="psp"><sup>4</sup> <sub>Mbps</sub></div>
+        <div class="pr"><span class="pk">KES</span><span class="pa" data-t="1000">0</span><span class="pm">/30 days</span></div>
+        <div class="pg2">Perfect for fast browsing &amp; light use</div>
+        <div class="ph"></div>
+        <ul class="pf">
+          <li><span class="ck">✦</span>4 Mbps Download Speed</li>
+          <li><span class="ck">✦</span>Fast Web Browsing</li>
+          <li><span class="ck">✦</span>Music Streaming</li>
+          <li><span class="ck">✦</span>30-Day Package</li>
+          <li class="off"><span class="ck">✦</span>HD Video Streaming</li>
+          <li class="off"><span class="ck">✦</span>Multi-Device Downloads</li>
+        </ul>
+        <a href="tel:0746071692" class="pbn pbo"><span>Call to Connect →</span></a>
+      </div>
+
+      <!-- 7 Mbps (Hot) -->
+      <div class="gc pc hot rv"><div class="iris"></div>
+        <div class="pb">Most Popular</div>
+        <div class="pt">Standard</div>
+        <div class="psp"><sup>7</sup> <sub>Mbps</sub></div>
+        <div class="pr"><span class="pk">KES</span><span class="pa" data-t="1300">0</span><span class="pm">/30 days</span></div>
+        <div class="pg2">Great for families &amp; movie streaming</div>
+        <div class="ph"></div>
+        <ul class="pf">
+          <li><span class="ck">✦</span>7 Mbps Download Speed</li>
+          <li><span class="ck">✦</span>Fast Web Browsing</li>
+          <li><span class="ck">✦</span>HD Movie &amp; Music Streaming</li>
+          <li><span class="ck">✦</span>30-Day Package</li>
+          <li><span class="ck">✦</span>Multiple Devices</li>
+          <li class="off"><span class="ck">✦</span>4K / Ultra HD</li>
+        </ul>
+        <a href="tel:0746071692" class="pbn pbg"><span>Call to Connect →</span></a>
+      </div>
+
+      <!-- 10 Mbps -->
+      <div class="gc pc rv"><div class="iris"></div>
+        <div class="pt">Premium</div>
+        <div class="psp"><sup>10</sup> <sub>Mbps</sub></div>
+        <div class="pr"><span class="pk">KES</span><span class="pa" data-t="1500">0</span><span class="pm">/30 days</span></div>
+        <div class="pg2">Best for heavy downloads &amp; multiple devices</div>
+        <div class="ph"></div>
+        <ul class="pf">
+          <li><span class="ck">✦</span>10 Mbps Download Speed</li>
+          <li><span class="ck">✦</span>Fast Web Browsing</li>
+          <li><span class="ck">✦</span>4K Movie &amp; Music Streaming</li>
+          <li><span class="ck">✦</span>30-Day Package</li>
+          <li><span class="ck">✦</span>Multiple Device Downloads</li>
+          <li><span class="ck">✦</span>Heavy Use / Business</li>
+        </ul>
+        <a href="tel:0746071692" class="pbn pbo"><span>Call to Connect →</span></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXTRA SERVICES -->
+<section id="extra">
+  <div class="w">
+    <p class="eye rv">Beyond Internet</p>
+    <h2 class="rv">More Services<br>We Provide</h2>
+    <p class="sub rv">The Hague Ltd is your all-in-one technology &amp; installation partner. Call <strong style="color:var(--cyan)">0746 071 692</strong> for any of these.</p>
+    <div class="eg">
+      <div class="gc ec rv"><div class="iris"></div><div class="ei">📡</div><h4>Wi-Fi Installation</h4><p>Full home or office Wi-Fi setup and configuration</p></div>
+      <div class="gc ec rv"><div class="iris"></div><div class="ei">📷</div><h4>CCTV Installation</h4><p>Security camera installation &amp; setup</p></div>
+      <div class="gc ec rv"><div class="iris"></div><div class="ei">⚡</div><h4>Electrical Wiring</h4><p>Safe and certified electrical wiring services</p></div>
+      <div class="gc ec rv"><div class="iris"></div><div class="ei">🔧</div><h4>Electrical Repairs</h4><p>Fast diagnosis and repair of electrical faults</p></div>
+      <div class="gc ec rv"><div class="iris"></div><div class="ei">📺</div><h4>TV &amp; Aerial Installation</h4><p>Aerial fitting, decoder setup &amp; signal alignment</p></div>
+      <div class="gc ec rv"><div class="iris"></div><div class="ei">🔩</div><h4>TV Mounting</h4><p>Wall mounting for flat-screen TVs of all sizes</p></div>
+      <div class="gc ec rv"><div class="iris"></div><div class="ei">🔥</div><h4>Gas Supply</h4><p>LPG gas cylinder supply and delivery</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="w">
+    <div class="ww">
+      <div>
+        <p class="eye rv">Why The Hague</p>
+        <h2 class="rv">Reliability You<br>Can Count On</h2>
+        <p class="sub rv">We're not just an ISP — we're your local tech partner. Fast connections, real support, fair prices.</p>
+        <ul class="wf">
+          <li class="wfi rv"><div class="wic">⚡</div><div><h4>Consistent Speeds</h4><p>Get exactly the speed you pay for — no throttling, no excuses.</p></div></li>
+          <li class="wfi rv"><div class="wic">📲</div><div><h4>Lipa Na M-Pesa</h4><p>Pay instantly via Paybill <strong style="color:var(--cyan)">4045895</strong>. Account: your registered number. Zero queues.</p></div></li>
+          <li class="wfi rv"><div class="wic">💬</div><div><h4>Real Local Support</h4><p>Call <strong style="color:var(--cyan)">0746 071 692</strong> and reach a real person — not a bot or a call centre.</p></div></li>
+          <li class="wfi rv"><div class="wic">🗓️</div><div><h4>Full 30-Day Packages</h4><p>Every package gives you 30 full days of connectivity. The speed you need, guaranteed.</p></div></li>
+        </ul>
+      </div>
+      <div class="sph">
+        <div class="or or1"></div>
+        <div class="or or2"></div>
+        <div class="sphere"><div class="slbl">📡</div></div>
+        <div class="nd nd1"></div>
+        <div class="nd nd2"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COVERAGE -->
+<section id="coverage">
+  <div class="w">
+    <p class="eye rv">Where We Are</p>
+    <h2 class="rv">Coverage Areas</h2>
+    <p class="sub rv">Currently live across Embakasi and surrounding estates. Call us if your area isn't listed — we're expanding!</p>
+    <div class="ag">
+      <div class="gc ac rv"><div class="iris"></div><div class="ai">📍</div><div class="an">Embakasi</div><div class="al">● Live</div></div>
+      <div class="gc ac rv"><div class="iris"></div><div class="ai">📍</div><div class="an">Soweto</div><div class="al">● Live</div></div>
+      <div class="gc ac rv"><div class="iris"></div><div class="ai">📍</div><div class="an">Bee Center</div><div class="al">● Live</div></div>
+      <div class="gc ac rv"><div class="iris"></div><div class="ai">📍</div><div class="an">Nasra</div><div class="al">● Live</div></div>
+      <div class="gc ac rv"><div class="iris"></div><div class="ai">📍</div><div class="an">Komarock</div><div class="al">● Live</div></div>
+      <div class="gc ac rv"><div class="iris"></div><div class="ai">🔜</div><div class="an">Your Area?</div><div class="as2">◉ Ask Us</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="w">
+    <p class="eye rv">Get in Touch</p>
+    <h2 class="rv">Ready to Connect?</h2>
+    <div class="cl">
+      <div class="cleft rv">
+        <h3>Reach Us Directly</h3>
+        <a href="tel:0746071692" class="cm"><div class="cmic">📞</div><div><div class="cml">Phone / WhatsApp</div><div class="cmv">0746 071 692</div></div></a>
+        <a href="mailto:thehagueltd@gmail.com" class="cm"><div class="cmic">✉️</div><div><div class="cml">Email</div><div class="cmv">thehagueltd@gmail.com</div></div></a>
+        <a href="#" class="cm"><div class="cmic">🕐</div><div><div class="cml">Support Hours</div><div class="cmv">Mon – Sun, 7 AM – 10 PM</div></div></a>
+        <div class="mpb">
+          <div class="mph">Lipa Na M-Pesa Paybill</div>
+          <div class="mpn">4045895</div>
+          <div class="mps">Account Number: Your Registered Phone Number</div>
+        </div>
+      </div>
+      <div class="gc cf rv"><div class="iris"></div>
+        <h3>Send Us a Message</h3>
+        <div class="fgr">
+          <div class="fg"><label>Full Name</label><input type="text" id="fn" placeholder="John Kamau"/></div>
+          <div class="fg"><label>Phone Number</label><input type="tel" id="fp" placeholder="0746 071 692"/></div>
+        </div>
+        <div class="fg"><label>Your Location / Estate</label><input type="text" id="fl" placeholder="e.g. Soweto, Embakasi"/></div>
+        <div class="fg">
+          <label>Service / Package</label>
+          <select id="fk">
+            <option value="">— Choose —</option>
+            <option>4 Mbps — KES 1,000/30 days</option>
+            <option>7 Mbps — KES 1,300/30 days</option>
+            <option>10 Mbps — KES 1,500/30 days</option>
+            <option>Wi-Fi Installation</option>
+            <option>CCTV Installation</option>
+            <option>Electrical Services</option>
+            <option>TV / Aerial / TV Mounting</option>
+            <option>Gas Supply</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg"><label>Message (Optional)</label><textarea id="fm" placeholder="Anything you'd like us to know..."></textarea></div>
+        <button class="sbtn" onclick="send()"><span>Send Message ➜</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div class="fb">
+      <a href="#hero" class="logo"><div class="logo-ic">TH</div><div class="logo-tx">The Hague<br><em>Internet Services</em></div></a>
+      <p>Just One Service, Give It To Me. Fast · Affordable · Reliable internet across Embakasi &amp; surrounding estates.</p>
+    </div>
+    <div class="fc">
+      <h5>Packages</h5>
+      <ul>
+        <li><a href="#pricing">4 Mbps — KES 1,000</a></li>
+        <li><a href="#pricing">7 Mbps — KES 1,300</a></li>
+        <li><a href="#pricing">10 Mbps — KES 1,500</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>More Services</h5>
+      <ul>
+        <li><a href="#extra">Wi-Fi Installation</a></li>
+        <li><a href="#extra">CCTV Installation</a></li>
+        <li><a href="#extra">Electrical Wiring</a></li>
+        <li><a href="#extra">TV Mounting</a></li>
+        <li><a href="#extra">Gas Supply</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="tel:0746071692">0746 071 692</a></li>
+        <li><a href="#coverage">Coverage Areas</a></li>
+        <li><a href="#contact">Send a Message</a></li>
+        <li><a href="#">Paybill: 4045895</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fb2">
+    <div>© 2025 The Hague Ltd. All rights reserved. 🇰🇪</div>
+    <div class="soc">
+      <a href="#" class="sl3">f</a>
+      <a href="#" class="sl3">W</a>
+      <a href="#" class="sl3">𝕏</a>
+      <a href="#" class="sl3">◎</a>
+    </div>
+    <div>Fast · Affordable · Reliable</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">✅ Sent! We'll call you on 0746 071 692 shortly.</div>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'),cring=document.getElementById('cring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cring.style.left=rx+'px';cring.style.top=ry+'px';requestAnimationFrame(anim);})();
+document.querySelectorAll('a,button,.gc').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';cring.style.width='52px';cring.style.height='52px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';cring.style.width='36px';cring.style.height='36px';});
+});
+
+/* NETWORK CANVAS */
+(function(){
+  const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+  let W,H,ns=[];
+  const N=45,CD=125;
+  function rsz(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
+  rsz();window.addEventListener('resize',rsz);
+  class Nd{
+    constructor(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.38;this.vy=(Math.random()-.5)*.38;this.r=Math.random()*1.4+.5;}
+    up(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1;}
+    dr(){cx.beginPath();cx.arc(this.x,this.y,this.r,0,Math.PI*2);cx.fillStyle='rgba(58,232,255,.55)';cx.fill();}
+  }
+  for(let i=0;i<N;i++)ns.push(new Nd());
+  function loop(){
+    cx.clearRect(0,0,W,H);
+    ns.forEach(n=>{n.up();n.dr();});
+    for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
+      const d=Math.hypot(ns[i].x-ns[j].x,ns[i].y-ns[j].y);
+      if(d<CD){cx.beginPath();cx.moveTo(ns[i].x,ns[i].y);cx.lineTo(ns[j].x,ns[j].y);cx.strokeStyle=`rgba(58,232,255,${(1-d/CD)*.16})`;cx.lineWidth=.65;cx.stroke();}
+    }
+    ns.forEach(n=>{
+      const d=Math.hypot(n.x-mx,n.y-my);
+      if(d<145){cx.beginPath();cx.moveTo(n.x,n.y);cx.lineTo(mx,my);cx.strokeStyle=`rgba(155,109,255,${(1-d/145)*.28})`;cx.lineWidth=.75;cx.stroke();}
+    });
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* SCROLL REVEAL */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+/* COUNTERS */
+function cu(el){
+  const t=parseFloat(el.dataset.t),s=el.dataset.s||'',dur=1600,st=performance.now();
+  const step=now=>{const p=Math.min((now-st)/dur,1),ease=1-Math.pow(1-p,3),v=t*ease;
+    el.textContent=(Number.isInteger(t)?Math.floor(v):v.toFixed(1))+s;if(p<1)requestAnimationFrame(step);};
+  requestAnimationFrame(step);
+}
+const cob=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){cu(e.target);cob.unobserve(e.target);}}),{threshold:.5});
+document.querySelectorAll('[data-t]').forEach(el=>cob.observe(el));
+
+/* NAV */
+function tnav(){document.getElementById('nl').classList.toggle('open');}
+document.querySelectorAll('.nl a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nl').classList.remove('open')));
+
+/* FORM */
+function send(){
+  const n=document.getElementById('fn').value.trim(),p=document.getElementById('fp').value.trim();
+  if(!n||!p){alert('Please enter your name and phone number.');return;}
+  const t=document.getElementById('toast');
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4500);
+  ['fn','fp','fl','fk','fm'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+}
+
+/* NAV SCROLL */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.background=scrollY>60?'rgba(7,9,23,.95)':'rgba(7,9,23,.55)';
+});
+</script>
+</body>
+</html>
